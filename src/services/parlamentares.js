@@ -1,7 +1,8 @@
 import Api from './api'
 
 const ParlamentaresService = {
-    index: () => Api.get(''),
+    index: () => Api.get('')
 }
+
 
 export default ParlamentaresService;

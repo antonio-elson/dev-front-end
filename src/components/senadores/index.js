@@ -7,29 +7,28 @@ import ParlamentaresService from '../../services/parlamentares';
 import '../../styles/parlamentares.scss'
 
 const Senadores = (props) => {
-    const [parlamentares, setParlamentares] = useState([]);
-    const [current_parlamentares, setCurrentParlamentar] = useState({ NomeParlamentar: "", SiglaPartidoParlamentar: "", CodigoParlamentar: ""});
+    //const [parlamentares, setParlamentares] = useState([]);
+    //const [current_parlamentares, setCurrentParlamentar] = useState({ NomeParlamentar: "", SiglaPartidoParlamentar: "", CodigoParlamentar: ""});
   
-    const selectParlamentar = (id) => {
-        const parlamentar = parlamentares.find((parlamentar) => {
-          return parlamentar._id === id;
-        })
-        setCurrentParlamentar(parlamentar);
-      }
-    
+    //const selectParlamentar = (id) => {
+    //    const parlamentar = parlamentares.find((parlamentar) => {
+    //      return parlamentar._id === id;
+    //    })
+    //    setCurrentParlamentar(parlamentar);
+    //  }
+    //
 
-    useEffect(() => {
-        fetchParlamentares();
-      }, []);
+   // useEffect(() => {
+   //     fetchParlamentares();
+   //   }, []);
+   // 
     
-    
-  async function fetchParlamentares() {
-    const response = await ParlamentaresService.index();
-    if (response.data.length >= 1) {
-      setParlamentares(response.data)
-      setCurrentParlamentar(response.data)
-    }
-  }
+ // async function fetchParlamentares() {
+//    const response = await ParlamentaresService.index();
+ //   if (response.data.length >= 1) {
+ //     setParlamentares(response.data)
+ //     setCurrentParlamentar(response.data)
+ //   }}
     return (
         <Fragment>
             <Column.Group className="parlamentares" id="parlamentares">
@@ -47,17 +46,14 @@ const Senadores = (props) => {
                             Search...
                     </Column>
                     </Column.Group>
-                    <ListSenadores
-                        parlamentares={parlamentares}
-                        selectParlamentar={selectParlamentar}
-                        current_parlamentares={current_parlamentares} />
+                    <ListSenadores/>
                 </Menu>
 
 
                 <Column size={12} className="notes-editor" id="notes-editor">
                     Editor...
         </Column>
-            </Column.Group>
+              </Column.Group>
         </Fragment>
     )
 }
