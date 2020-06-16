@@ -1,5 +1,5 @@
 import React, { Fragment, Component } from 'react';
-import { Image, Table } from 'rbx';
+import { Image, Table, P } from 'rbx';
 import { Link } from 'react-router-dom'
 
 import Api from '../../services/api.js';
@@ -13,6 +13,7 @@ class Parlamentares extends Component {
 
         this.state = {
             parlamentares: [],
+            test: {},
             parlamentar: {},
         };
     }
@@ -21,16 +22,16 @@ class Parlamentares extends Component {
    
     handleClick = (it) => {
         const item = it.target.id;
+        alert(`O id do Parlamentar é: ${item}`)
         this.callApi(item)
   
     }
 
-    async callApi(ti) {
-        const resp = await ApiParlamentar.get(`/${ti}/comissoes.json`)
+    async callApi(codSen) {
+        const resp = await ApiParlamentar.get(`/${codSen}/comissoes.json`)
         console.log(resp.data)
         this.setState({
-            parlamentar: resp.data.MembroComissaoParlamentar
-            
+            parlamentar: resp.data.MembroComissaoParlamentar.Metadados            
         });
     }
 
@@ -39,8 +40,8 @@ class Parlamentares extends Component {
         const response = await Api.get('')
         //console.log(response.data)
         this.setState({
-            parlamentares: response.data.ListaParlamentarEmExercicio.Parlamentares.Parlamentar
-            
+            parlamentares: response.data.ListaParlamentarEmExercicio.Parlamentares.Parlamentar,
+            test: response.data.ListaParlamentarEmExercicio.Metadados
         });
     }
 
@@ -48,18 +49,22 @@ class Parlamentares extends Component {
 
     render() {
 
-        const { parlamentar, parlamentares } = this.state;
+        const { parlamentares } = this.state;
         return (            
 
 
             <Fragment>
-                <p>{() => parlamentar.Metadados.VersaoServico}</p>
-                <Table striped>
+
+                <Table striped >
                     <Table.Head>
                         <Table.Row>
                             <Table.Heading>Foto</Table.Heading>
                             <Table.Heading>Nome</Table.Heading>
                             <Table.Heading>UF</Table.Heading>
+                            <Table.Heading>Partido</Table.Heading>
+                            <Table.Heading>Membro de Mesa</Table.Heading>
+                            <Table.Heading>Membro de Liderança</Table.Heading>
+                            <Table.Heading>Pagina Oficial</Table.Heading>
   
         
                         </Table.Row>
@@ -68,13 +73,19 @@ class Parlamentares extends Component {
                         
                         {parlamentares.map((i) => (
                             <Table.Row  key={i.IdentificacaoParlamentar.CodigoParlamentar}>
-                               
+                                
+                                <Table.Cell><Image.Container size={96}>
+                                    <Image className="img" src={i.IdentificacaoParlamentar.UrlFotoParlamentar} />
+                                    </Image.Container></Table.Cell>
                                 <Table.Cell>
-                                    <Link id={i.IdentificacaoParlamentar.CodigoParlamentar} onClick={this.handleClick} >
-                                    {i.IdentificacaoParlamentar.NomeCompletoParlamentar}</Link>
+                                    <a href={i.IdentificacaoParlamentar.UrlPaginaParlamentar}id={i.IdentificacaoParlamentar.CodigoParlamentar} onClick={this.handleClick} >
+                                    {i.IdentificacaoParlamentar.NomeCompletoParlamentar}</a>
                                 </Table.Cell>
                                 <Table.Cell>{i.IdentificacaoParlamentar.UfParlamentar}</Table.Cell>
                                 <Table.Cell>{i.IdentificacaoParlamentar.SiglaPartidoParlamentar}</Table.Cell>
+                                <Table.Cell>{i.IdentificacaoParlamentar.MembroMesa}</Table.Cell>
+                                <Table.Cell>{i.IdentificacaoParlamentar.MembroLideranca}</Table.Cell>
+                                <Table.Cell><a href={i.IdentificacaoParlamentar.UrlPaginaParlamentar}>Ir para a pagina oficial</a></Table.Cell>
                         
                             </Table.Row>
                         ))}

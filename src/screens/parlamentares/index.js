@@ -14,21 +14,8 @@ const ParlamentaresScreen = () => {
     return (
     <Fragment>
         <Header/>
-        <Filter/>
-        <Section size="medium" className="home">
-            <Container>
-              <Column.Group>
-                <Column size={5}>
-                <Parlamentares/>
-                </Column>
-                <Column size={6} offset={1}>
-                <Senador/>  
-                </Column>
-              </Column.Group>
-            </Container>
-        </Section>
-        
-
+        <Filter/> 
+        <Parlamentares/>
     </Fragment>
     )
 }

@@ -2,7 +2,7 @@
 
 .parlamentares{
     height: calc(100% - 70px);
-    margin-left: 0px;
+    margin-left: 0px ;
     margin-right: 0px;
     margin-top: 0px;
 }
@@ -11,3 +11,14 @@
     background: white;
     padding-top: 10px;
 }
+
+.parl{
+    background-color: $custom-purple;
+    height: calc(100% - 70px);
+  }
+
+  .img {
+    margin-left: 0px ;
+    margin-right: 0px;
+    margin-top: 0px;
+  }

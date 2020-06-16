@@ -15,10 +15,13 @@ const HomeScreen = () => (
               <Column.Group>
                 <Column size={5}>
                     <Title size={2} spaced className="has-text-white">
-                        dfdkfjkdfas desfio jfornte end 
+                        Desafio Dev Front-end
                     </Title>
-                    <Title size={5} spaced className="has-text-light" subtitle>
-                        Lorema kldija d dsaif klasjdfkajsodfuioas jdkfjiasd flkdsjfas dfijasdf
+                    <Title id="title"size={5} spaced className="has-text-light" subtitle>
+                       <p>Quero agradecer a oportunidade ao recrutador Glebson por me propor este desafio!
+                        Tive a oportunidade de colocar minha experiêcia em prática e de aprender cada vez cada 
+                        mais. Tive alguns contratempos mas tenho conciência do que sou realmente capaz.</p><br/>
+                        <p>"Simbora pro código".</p><br/>
                     </Title>
                     <Title>
                         <Link to='/parlamentares' className="button is-outlined is-white is-large">
