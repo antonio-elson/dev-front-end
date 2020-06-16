@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 
 import Api from '../../services/api.js';
 import ApiParlamentar from '../../services/apiParlamentar.js';
+import Senador from '../senador/index.js';
 
 class Parlamentares extends Component {
 
@@ -11,8 +12,8 @@ class Parlamentares extends Component {
         super();
 
         this.state = {
-            parlamentar: {},
             parlamentares: [],
+            parlamentar: {},
         };
     }
 
@@ -20,13 +21,17 @@ class Parlamentares extends Component {
    
     handleClick = (it) => {
         const item = it.target.id;
-        console.log(item)
-            const response = ApiParlamentar.get(`/${item}/comissoes.json`)
-            //console.log(response.data)
-            this.setState({
-                parlamentar: response.data
-                
-            });
+        this.callApi(item)
+  
+    }
+
+    async callApi(ti) {
+        const resp = await ApiParlamentar.get(`/${ti}/comissoes.json`)
+        console.log(resp.data)
+        this.setState({
+            parlamentar: resp.data.MembroComissaoParlamentar
+            
+        });
     }
 
 
@@ -43,42 +48,34 @@ class Parlamentares extends Component {
 
     render() {
 
- 
-
-        const { parlamentares } = this.state;
-        return (
+        const { parlamentar, parlamentares } = this.state;
+        return (            
 
 
             <Fragment>
+                <p>{() => parlamentar.Metadados.VersaoServico}</p>
                 <Table striped>
                     <Table.Head>
                         <Table.Row>
                             <Table.Heading>Foto</Table.Heading>
                             <Table.Heading>Nome</Table.Heading>
                             <Table.Heading>UF</Table.Heading>
-                            <Table.Heading>Partido</Table.Heading>
-                            <Table.Heading>Membro de Mesa</Table.Heading>
-                            <Table.Heading>Membro de Liderança</Table.Heading>
-                            <Table.Heading>Link Oficial</Table.Heading>
+  
+        
                         </Table.Row>
                     </Table.Head>
                     <Table.Body>
-                        {this.state.parlamentares.map((i) => (
+                        
+                        {parlamentares.map((i) => (
                             <Table.Row  key={i.IdentificacaoParlamentar.CodigoParlamentar}>
-                                <Table.Cell><Image.Container size={128}>
-                                    <Image src={i.IdentificacaoParlamentar.UrlFotoParlamentar} />
-                                 </Image.Container>{i.IdentificacaoParlamentar.SiglaPartidoParlamentar}</Table.Cell>
+                               
                                 <Table.Cell>
                                     <Link id={i.IdentificacaoParlamentar.CodigoParlamentar} onClick={this.handleClick} >
                                     {i.IdentificacaoParlamentar.NomeCompletoParlamentar}</Link>
                                 </Table.Cell>
                                 <Table.Cell>{i.IdentificacaoParlamentar.UfParlamentar}</Table.Cell>
                                 <Table.Cell>{i.IdentificacaoParlamentar.SiglaPartidoParlamentar}</Table.Cell>
-                                <Table.Cell>{i.IdentificacaoParlamentar.MembroMesa}</Table.Cell>
-                                <Table.Cell>{i.IdentificacaoParlamentar.MembroLideranca}</Table.Cell>
-                                <Table.Cell>
-                                    <a href={i.IdentificacaoParlamentar.UrlPaginaParlamentar}>Ir para a pagina oficial</a>
-                                    </Table.Cell>
+                        
                             </Table.Row>
                         ))}
                     </Table.Body>
