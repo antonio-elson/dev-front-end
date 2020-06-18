@@ -14,11 +14,15 @@
 
 .parl{
     background-color: $custom-purple;
-    height: calc(100% - 70px);
+    height: calc(100%);
   }
 
   .img {
     margin-left: 0px ;
     margin-right: 0px;
     margin-top: 0px;
+  }
+
+  #col {
+    margin-right: 2px;
   }

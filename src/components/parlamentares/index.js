@@ -46,10 +46,10 @@ class Parlamentares extends Component {
         return (
 
             <Fragment>
-                <Section size="medium" className="">
-                    <Container>
+                <Section size="medium" >
+                    <Container className="parl">
                         <Column.Group>
-                            <Column size={5}>
+                            <Column size={4}  id="col"> 
                                 <Table striped >
                                     <Table.Head>
                                         <Table.Row>
@@ -76,8 +76,8 @@ class Parlamentares extends Component {
                                     </Table.Body>
                                 </Table>
                             </Column>
-                            <Column size={8} offset={0}>
-                                <Section size="medium" className="#">
+                            <Column size={8} >
+                                <Section size="medium" className="">
                                     <Container>
                                         <Column.Group>
                                             <Column size={4}>
