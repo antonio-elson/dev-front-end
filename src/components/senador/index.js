@@ -3,9 +3,11 @@ import handlClick from './../parlamentares'
 import { Field, Label, Notification, Container, Control, Input, Fieldset, Section, Column, Image }
     from 'rbx';
 
+import Parlamentares from '../parlamentares'
+
 class Senador extends Component {
 
- 
+
     render() {
 
         return (
@@ -28,7 +30,7 @@ class Senador extends Component {
                                                 </Field.Label>
                                                 <Field.Body>
                                                     <Control>
-                                                        <Input type="text" placeholder={() =>this.state.parlamentarIdentificacaoParlamentar.NomeParlamentar} />
+                                                        <Input type="text" placeholder="" />
                                                     </Control>
                                                 </Field.Body>
                                             </Field>

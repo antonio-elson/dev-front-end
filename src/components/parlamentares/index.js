@@ -1,10 +1,10 @@
 import React, { Fragment, Component } from 'react';
-import { Image, Table, P } from 'rbx';
-import { Link } from 'react-router-dom'
+import { Table, Card, Content, Title, Field, Label, Notification, Container, Control, Input, Fieldset, Section, Column, Image } from 'rbx';
 
 import Api from '../../services/api.js';
 import ApiParlamentar from '../../services/apiParlamentar.js';
 import Senador from '../senador/index.js';
+
 
 class Parlamentares extends Component {
 
@@ -13,87 +13,123 @@ class Parlamentares extends Component {
 
         this.state = {
             parlamentares: [],
-            test: {},
             parlamentar: {},
         };
     }
 
-
-   
     handleClick = (it) => {
+
         const item = it.target.id;
-        alert(`O id do Parlamentar é: ${item}`)
+
         this.callApi(item)
-  
     }
 
     async callApi(codSen) {
+        const { parlamentar } = this.state
         const resp = await ApiParlamentar.get(`/${codSen}/comissoes.json`)
-        console.log(resp.data)
+        //console.log(resp.data)
         this.setState({
-            parlamentar: resp.data.MembroComissaoParlamentar.Metadados            
+            parlamentar: resp.data.MembroComissaoParlamentar.Parlamentar.IdentificacaoParlamentar
         });
     }
-
 
     async componentDidMount() {
         const response = await Api.get('')
         //console.log(response.data)
         this.setState({
-            parlamentares: response.data.ListaParlamentarEmExercicio.Parlamentares.Parlamentar,
-            test: response.data.ListaParlamentarEmExercicio.Metadados
+            parlamentares: response.data.ListaParlamentarEmExercicio.Parlamentares.Parlamentar
+
         });
     }
 
-
-
     render() {
 
-        const { parlamentares } = this.state;
-        return (            
-
+        const { parlamentares, parlamentar } = this.state;
+        return (
 
             <Fragment>
-
-                <Table striped >
-                    <Table.Head>
-                        <Table.Row>
-                            <Table.Heading>Foto</Table.Heading>
-                            <Table.Heading>Nome</Table.Heading>
-                            <Table.Heading>UF</Table.Heading>
-                            <Table.Heading>Partido</Table.Heading>
-                            <Table.Heading>Membro de Mesa</Table.Heading>
-                            <Table.Heading>Membro de Liderança</Table.Heading>
-                            <Table.Heading>Pagina Oficial</Table.Heading>
-  
-        
-                        </Table.Row>
-                    </Table.Head>
-                    <Table.Body>
-                        
-                        {parlamentares.map((i) => (
-                            <Table.Row  key={i.IdentificacaoParlamentar.CodigoParlamentar}>
-                                
-                                <Table.Cell><Image.Container size={96}>
-                                    <Image className="img" src={i.IdentificacaoParlamentar.UrlFotoParlamentar} />
-                                    </Image.Container></Table.Cell>
-                                <Table.Cell>
-                                    <a href={i.IdentificacaoParlamentar.UrlPaginaParlamentar}id={i.IdentificacaoParlamentar.CodigoParlamentar} onClick={this.handleClick} >
-                                    {i.IdentificacaoParlamentar.NomeCompletoParlamentar}</a>
-                                </Table.Cell>
-                                <Table.Cell>{i.IdentificacaoParlamentar.UfParlamentar}</Table.Cell>
-                                <Table.Cell>{i.IdentificacaoParlamentar.SiglaPartidoParlamentar}</Table.Cell>
-                                <Table.Cell>{i.IdentificacaoParlamentar.MembroMesa}</Table.Cell>
-                                <Table.Cell>{i.IdentificacaoParlamentar.MembroLideranca}</Table.Cell>
-                                <Table.Cell><a href={i.IdentificacaoParlamentar.UrlPaginaParlamentar}>Ir para a pagina oficial</a></Table.Cell>
-                        
-                            </Table.Row>
-                        ))}
-                    </Table.Body>
-                </Table>
+                <Section size="medium" className="">
+                    <Container>
+                        <Column.Group>
+                            <Column size={5}>
+                                <Table striped >
+                                    <Table.Head>
+                                        <Table.Row>
+                                            <Table.Heading>Nome</Table.Heading>
+                                            <Table.Heading>UF</Table.Heading>
+                                            <Table.Heading>Partido</Table.Heading>
+                                        </Table.Row>
+                                    </Table.Head>
+                                    <Table.Body>
+                                        {parlamentares.map((i) => (
+                                            <Table.Row nome2={i.IdentificacaoParlamentar.CodigoParlamentar}>
+                                                <Table.Cell>
+                                                    <a id={i.IdentificacaoParlamentar.CodigoParlamentar} onClick={this.handleClick}>
+                                                        {i.IdentificacaoParlamentar.NomeParlamentar}</a>
+                                                </Table.Cell>
+                                                <Table.Cell>
+                                                    {i.IdentificacaoParlamentar.UfParlamentar}
+                                                </Table.Cell>
+                                            </Table.Row>
+                                        ))}
+                                    </Table.Body>
+                                </Table>
+                            </Column>
+                            <Column size={8} offset={0}>
+                                <Section size="medium" className="#">
+                                    <Container>
+                                        <Column.Group>
+                                            <Column size={4}>
+                                                <Image.Container size={1256}>
+                                                    <Image src={parlamentar.UrlFotoParlamentar} />
+                                                </Image.Container>
+                                            </Column>
+                                            <Column size={8}>
+                                                <Container fluid>
+                                                <Card>
+                                                     <Card.Header>
+                                                       <Card.Header.Title>{parlamentar.NomeParlamentar}-{parlamentar.UfParlamentar}</Card.Header.Title>
+                                                     </Card.Header>
+                                                     <Card.Content>
+                                                       <Content>
+                                                           <Table striped >
+                                                              <Table.Body>
+                                                                  <Table.Row>
+                                                                  <Table.Cell>Nome: </Table.Cell>                                                 
+                                                                  <Table.Cell>{parlamentar.NomeCompletoParlamentar} </Table.Cell>                                                 
+                                                                  </Table.Row>
+                                                                  <Table.Row>
+                                                                  <Table.Cell>UF: </Table.Cell>
+                                                                  <Table.Cell>{parlamentar.UfParlamentar} </Table.Cell>                                                                                                        
+                                                                  </Table.Row>
+                                                                  <Table.Row>
+                                                                  <Table.Cell>Partido: </Table.Cell> 
+                                                                  <Table.Cell>{parlamentar.SiglaPartidoParlamentar} </Table.Cell>                                                                                                                                                              
+                                                                  </Table.Row><Table.Row>
+                                                                  <Table.Cell>Email: </Table.Cell> 
+                                                                  <Table.Cell>{parlamentar.EmailParlamentar} </Table.Cell>                                                                                                                                                              
+                                                                  </Table.Row><Table.Row>
+                                                                  <Table.Cell>Site Oficial: </Table.Cell> 
+                                                                  <Table.Cell><a href={parlamentar.UrlPaginaParlamentar}>Clique aqui. </a> </Table.Cell>                                                                                                               
+                                                                  </Table.Row>                                                                
+                                                              </Table.Body>
+                                                           </Table>  
+                                                        </Content>
+                                                    </Card.Content>
+                                                    </Card>
+                                                </Container>                                 
+                                            </Column>
+                                        </Column.Group>
+                                    </Container>
+                                </Section>
+                            </Column>
+                      </Column.Group>
+                    </Container>
+                </Section>                
             </Fragment>
         )
     }
 }
-
+                
 export default Parlamentares;
+

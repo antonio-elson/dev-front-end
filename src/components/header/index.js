@@ -13,7 +13,7 @@ function Header(props) {
     <Navbar>
       <Container>
         <Navbar.Brand>
-          <Link to="/">
+          <Link >
             <Image.Container size={128}>
               <Image src={logoImage} />
             </Image.Container>
