@@ -5,7 +5,6 @@ import Api from '../../services/api.js';
 import ApiParlamentar from '../../services/apiParlamentar.js';
 import Senador from '../senador/index.js';
 
-
 class Parlamentares extends Component {
 
     constructor() {
@@ -20,7 +19,6 @@ class Parlamentares extends Component {
     handleClick = (it) => {
 
         const item = it.target.id;
-
         this.callApi(item)
     }
 
@@ -62,13 +60,16 @@ class Parlamentares extends Component {
                                     </Table.Head>
                                     <Table.Body>
                                         {parlamentares.map((i) => (
-                                            <Table.Row nome2={i.IdentificacaoParlamentar.CodigoParlamentar}>
+                                            <Table.Row>
                                                 <Table.Cell>
                                                     <a id={i.IdentificacaoParlamentar.CodigoParlamentar} onClick={this.handleClick}>
                                                         {i.IdentificacaoParlamentar.NomeParlamentar}</a>
                                                 </Table.Cell>
                                                 <Table.Cell>
                                                     {i.IdentificacaoParlamentar.UfParlamentar}
+                                                </Table.Cell>
+                                                <Table.Cell>
+                                                    {i.IdentificacaoParlamentar.SiglaPartidoParlamentar}
                                                 </Table.Cell>
                                             </Table.Row>
                                         ))}
